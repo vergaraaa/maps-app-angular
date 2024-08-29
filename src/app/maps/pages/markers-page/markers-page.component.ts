@@ -73,6 +73,10 @@ export class MarkersPageComponent implements AfterViewInit {
       .setLngLat(lngLat)
       .addTo(this.map);
 
+    marker.on('dragend', (e) => {
+      this.saveToLocalStorage();
+    });
+
     this.markers.push({ color, marker });
     this.saveToLocalStorage();
   }
@@ -80,6 +84,7 @@ export class MarkersPageComponent implements AfterViewInit {
   deleteMarker(i: number) {
     this.markers[i].marker.remove();
     this.markers.splice(i, 1);
+    this.saveToLocalStorage();
   }
 
   flyTo(marker: Marker) {
